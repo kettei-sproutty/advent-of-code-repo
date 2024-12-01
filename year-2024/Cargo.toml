@@ -1,0 +1,11 @@
+[[bin]]
+name = "day-01"
+path = "src/day-01.rs"
+
+[dependencies.serde]
+workspace = true
+
+[package]
+edition = "2021"
+name = "year-2024"
+version = "0.1.0"
