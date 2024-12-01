@@ -1,6 +1,11 @@
+[[bench]]
+name = "benchmarks"
+path = "benches/benchmarks.rs"
+harness = false
+
 [[bin]]
 name = "day-01"
-path = "src/day-01.rs"
+path = "src/day_01.rs"
 
 [dependencies.serde]
 workspace = true
@@ -9,3 +14,6 @@ workspace = true
 edition = "2021"
 name = "year-2024"
 version = "0.1.0"
+
+[dev-dependencies]
+divan.workspace = true

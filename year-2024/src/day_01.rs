@@ -30,7 +30,7 @@ fn get_columns(input: &str) -> (Vec<isize>, Vec<isize>) {
   (left, right)
 }
 
-pub fn part1(input: &str) -> isize {
+pub fn part_one(input: &str) -> isize {
   let (mut left, mut right) = get_columns(input);
 
   left.sort();
@@ -45,7 +45,7 @@ pub fn part1(input: &str) -> isize {
   accumulator
 }
 
-pub fn part2(input: &str) -> isize {
+pub fn part_two(input: &str) -> isize {
   let (left, right) = get_columns(input);
 
   let mut accumulator: isize = 0;
@@ -66,13 +66,14 @@ pub fn part2(input: &str) -> isize {
   accumulator
 }
 
+#[allow(dead_code)]
 fn main() {
   let asset = include_str!("../assets/day-01/asset.txt");
-  let part_1_result = part1(asset);
+  let part_1_result = part_one(asset);
 
   println!("Part 1 result: {}", part_1_result);
 
-  let part_2_result = part2(asset);
+  let part_2_result = part_two(asset);
 
   println!("Part 2 result: {}", part_2_result);
 }
@@ -82,14 +83,14 @@ mod tests {
   use super::*;
 
   #[test]
-  fn test_part1() {
+  fn test_part_one_example() {
     let example_assets = include_str!("../assets/day-01/example.txt");
-    assert_eq!(part1(example_assets), 11);
+    assert_eq!(part_one(example_assets), 11);
   }
 
   #[test]
-  fn test_part2() {
+  fn test_part_two_example() {
     let example_assets = include_str!("../assets/day-01/example.txt");
-    assert_eq!(part2(example_assets), 31);
+    assert_eq!(part_two(example_assets), 31);
   }
 }
