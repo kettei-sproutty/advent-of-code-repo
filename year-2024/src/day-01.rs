@@ -57,8 +57,7 @@ pub fn part2(input: &str) -> isize {
     right_map.insert(value, current + 1);
   }
 
-  for index in 0..=left.len() - 1 {
-    let value = left[index];
+  for value in left {
     let occurencies = right_map.get(&value).unwrap_or(&0);
 
     accumulator += value * occurencies;
