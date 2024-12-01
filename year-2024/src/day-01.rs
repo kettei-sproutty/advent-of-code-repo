@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn get_columns(input: &str) -> (Vec<isize>, Vec<isize>) {
   let mut left: Vec<isize> = vec![];
   let mut right: Vec<isize> = vec![];
@@ -13,7 +15,7 @@ fn get_columns(input: &str) -> (Vec<isize>, Vec<isize>) {
       .get(0)
       .unwrap_or(&"0")
       .parse::<isize>()
-      .expect("Cannot convert to usize");
+      .expect("Cannot parse left to usize");
 
     let right_value = values
       .get(values.len() - 1)
@@ -48,23 +50,30 @@ pub fn part2(input: &str) -> isize {
 
   let mut accumulator: isize = 0;
 
+  let mut right_map: HashMap<isize, isize> = HashMap::new();
+
+  for value in right {
+    let current = right_map.get(&value).unwrap_or(&0);
+    right_map.insert(value, current + 1);
+  }
+
   for index in 0..=left.len() - 1 {
     let value = left[index];
+    let occurencies = right_map.get(&value).unwrap_or(&0);
 
-    let occurencies = right.iter().filter(|num| num.eq(&&value)).count();
-    accumulator += value * occurencies as isize;
+    accumulator += value * occurencies;
   }
 
   accumulator
 }
 
 fn main() {
-  let part_1 = include_str!("../assets/day-01/part-1.txt");
-  let part_1_result = part1(part_1);
+  let asset = include_str!("../assets/day-01/asset.txt");
+  let part_1_result = part1(asset);
 
   println!("Part 1 result: {}", part_1_result);
 
-  let part_2_result = part2(part_1);
+  let part_2_result = part2(asset);
 
   println!("Part 2 result: {}", part_2_result);
 }
@@ -77,5 +86,11 @@ mod tests {
   fn test_part1() {
     let example_assets = include_str!("../assets/day-01/example.txt");
     assert_eq!(part1(example_assets), 11);
+  }
+
+  #[test]
+  fn test_part2() {
+    let example_assets = include_str!("../assets/day-01/example.txt");
+    assert_eq!(part2(example_assets), 31);
   }
 }
