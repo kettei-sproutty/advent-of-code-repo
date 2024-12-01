@@ -1,4 +1,4 @@
-pub fn part1(input: &str) -> isize {
+fn get_columns(input: &str) -> (Vec<isize>, Vec<isize>) {
   let mut left: Vec<isize> = vec![];
   let mut right: Vec<isize> = vec![];
 
@@ -25,6 +25,12 @@ pub fn part1(input: &str) -> isize {
     right.push(right_value);
   }
 
+  (left, right)
+}
+
+pub fn part1(input: &str) -> isize {
+  let (mut left, mut right) = get_columns(input);
+
   left.sort();
   right.sort();
 
@@ -37,11 +43,30 @@ pub fn part1(input: &str) -> isize {
   accumulator
 }
 
+pub fn part2(input: &str) -> isize {
+  let (left, right) = get_columns(input);
+
+  let mut accumulator: isize = 0;
+
+  for index in 0..=left.len() - 1 {
+    let value = left[index];
+
+    let occurencies = right.iter().filter(|num| num.eq(&&value)).count();
+    accumulator += value * occurencies as isize;
+  }
+
+  accumulator
+}
+
 fn main() {
   let part_1 = include_str!("../assets/day-01/part-1.txt");
   let part_1_result = part1(part_1);
 
   println!("Part 1 result: {}", part_1_result);
+
+  let part_2_result = part2(part_1);
+
+  println!("Part 2 result: {}", part_2_result);
 }
 
 #[cfg(test)]
