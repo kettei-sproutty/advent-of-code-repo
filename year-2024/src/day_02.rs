@@ -88,12 +88,12 @@ mod tests {
   #[test]
   fn test_part_one_example() {
     let example_assets = include_str!("../assets/day-02/example.txt");
-    assert_eq!(part_one(example_assets), 3);
+    assert_eq!(part_one(example_assets), 2);
   }
 
   #[test]
   fn test_part_two_example() {
-    let example_assets = include_str!("../assets/day-01/example.txt");
+    let example_assets = include_str!("../assets/day-02/example.txt");
     assert_eq!(part_two(example_assets), 0);
   }
 }
