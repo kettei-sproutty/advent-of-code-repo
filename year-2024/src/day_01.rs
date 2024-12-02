@@ -9,19 +9,16 @@ fn get_columns(input: &str) -> (Vec<isize>, Vec<isize>) {
     if line.is_empty() {
       continue;
     }
-    let values = line.split(' ').collect::<Vec<&str>>();
+    let values = line.split_whitespace().collect::<Vec<&str>>();
 
-    let left_value = values
-      .get(0)
-      .unwrap_or(&"0")
+    let left_value = values.first().unwrap()
       .parse::<isize>()
-      .expect("Cannot parse left to usize");
+      .expect("Cannot parse left to isize");
 
-    let right_value = values
-      .get(values.len() - 1)
-      .unwrap_or(&"0")
+    let right_value = values.last().unwrap()
       .parse::<isize>()
-      .expect("Cannot parse right to usize");
+      .expect("Cannot parse right to isize");
+
 
     left.push(left_value);
     right.push(right_value);
