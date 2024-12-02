@@ -27,10 +27,11 @@ fn main() {
     .prompt()
     .expect("Cannot read day");
 
-  let year_path = format!("../year-{}", year);
+  let year_path = format!("year-{}", year);
   let cargo_toml_path = format!("{}/Cargo.toml", year_path);
-  let parsed = toml::from_str::<toml::Value>(&std::fs::read_to_string(&cargo_toml_path).expect("Cannot read Cargo.toml"))
-    .expect("Cannot parse Cargo.toml");
+  let toml = std::fs::read_to_string(&cargo_toml_path).expect("Cannot read Cargo.toml");
+
+  let parsed = toml::from_str::<toml::Value>(&toml).expect("Cannot parse Cargo.toml");
 
   let mut cargo_toml = parsed.as_table().expect("Cargo.toml must be a table").clone();
 
@@ -55,11 +56,24 @@ fn main() {
   std::fs::write(cargo_toml_path, toml::to_string(&cargo_toml).expect("Cannot serialize Cargo.toml"))
     .expect("Cannot write Cargo.toml");
 
-  let year_day_path = format!("{}/src/day-{:02}.rs", year_path, day);
+  let year_day_path = format!("{}/src/day_{:02}.rs", year_path, day);
   let template = include_str!("../templates/bin.rs");
 
   std::fs::write(year_day_path, template.replace("{{day}}", &day.to_string()))
     .expect("Cannot write day file");
+
+  std::fs::create_dir_all(format!("{}/assets/day-{:02}", year_path, day))
+    .expect("Cannot create asset directory");
+
+  std::fs::write(
+    format!("{}/assets/day-{:02}/asset.txt", year_path, day),
+    "".as_bytes(),
+  ).expect("Cannot create asset file");
+
+  std::fs::write(
+    format!("{}/assets/day-{:02}/example.txt", year_path, day),
+    "".as_bytes(),
+  ).expect("Cannot create asset file");
 
   println!("Day {} added to year {}", day, year);
 }
