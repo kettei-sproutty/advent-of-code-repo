@@ -124,8 +124,7 @@ pub fn part_two(input: &str) -> isize {
     if safe_list.is_valid {
       accumulator += 1;
     } else {
-      let new_list = safe_list.list.clone();
-      for index in 0..new_list.len() {
+      for index in 0..safe_list.list.len() {
         let mut list = safe_list.list.clone();
         list.remove(index);
 
