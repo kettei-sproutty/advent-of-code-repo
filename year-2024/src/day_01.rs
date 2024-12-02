@@ -35,7 +35,7 @@ pub fn part_one(input: &str) -> isize {
 
   let mut accumulator: isize = 0;
 
-  for index in 0..=left.len() - 1 {
+  for index in 0..left.len() {
     accumulator += (right[index] - left[index]).abs();
   }
 

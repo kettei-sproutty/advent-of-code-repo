@@ -28,3 +28,9 @@ Example:
 > Day:  3
 
 and generate the scaffold.
+
+## Update benchmark
+
+```sh
+cargo bench --workspace --all-features | grep -A 100 'benchmarks' > benchmarks_output/cargo_bench_output.txt
+```
