@@ -59,7 +59,7 @@ fn main() {
   let year_day_path = format!("{}/src/day_{:02}.rs", year_path, day);
   let template = include_str!("../templates/bin.rs");
 
-  std::fs::write(year_day_path, template.replace("{{day}}", &day.to_string()))
+  std::fs::write(year_day_path, template.replace("{{day}}", &format!("{:02}", day)))
     .expect("Cannot write day file");
 
   std::fs::create_dir_all(format!("{}/assets/day-{:02}", year_path, day))
