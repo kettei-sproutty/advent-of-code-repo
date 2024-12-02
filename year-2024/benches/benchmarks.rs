@@ -10,8 +10,23 @@ fn day_01_part_one() {
 }
 
 #[divan::bench]
+fn day_01_part_one_zip() {
+  day_01::part_one_zip(divan::black_box(include_str!("../assets/day-01/asset.txt")));
+}
+
+#[divan::bench]
+fn day_01_part_one_insert_sort() {
+  day_01::part_one_insert_sort(divan::black_box(include_str!("../assets/day-01/asset.txt")));
+}
+
+#[divan::bench]
 fn day_01_part_two() {
   day_01::part_two(divan::black_box(include_str!("../assets/day-01/asset.txt")));
+}
+
+#[divan::bench]
+fn day_01_part_two_directly_parsed() {
+  day_01::part_two_directly_parsed(divan::black_box(include_str!("../assets/day-01/asset.txt")));
 }
 
 #[divan::bench]
