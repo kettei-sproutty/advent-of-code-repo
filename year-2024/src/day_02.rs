@@ -12,25 +12,7 @@ struct SafeList {
 }
 
 impl SafeList {
-  fn from(values: Vec<&str>) -> Self {
-    let list = values.iter().filter_map(|value| value.parse::<isize>().ok()).collect::<Vec<isize>>();
-
-    let is_valid = list[0] != list[1];
-
-    let ordering = if list[0] < list[1] {
-      SafeListOrdering::Ascending
-    } else {
-      SafeListOrdering::Descending
-    };
-
-    SafeList {
-      ordering,
-      list,
-      is_valid,
-    }
-  }
-
-  fn from_isize(list: Vec<isize>) -> Self {
+  fn from(list: Vec<isize>) -> Self {
     let is_valid = list[0] != list[1];
 
     let ordering = if list[0] < list[1] {
@@ -80,7 +62,7 @@ pub fn part_one(input: &str) -> isize {
       continue;
     }
 
-    let values = line.split_whitespace().collect::<Vec<&str>>();
+    let values = line.split_whitespace().filter_map(|value| value.parse::<isize>().ok()).collect::<Vec<isize>>();
 
     let mut safe_list = SafeList::from(values);
     if !safe_list.is_valid {
@@ -110,7 +92,7 @@ pub fn part_two(input: &str) -> isize {
       continue;
     }
 
-    let values = line.split_whitespace().collect::<Vec<&str>>();
+    let values = line.split_whitespace().filter_map(|value| value.parse::<isize>().ok()).collect::<Vec<isize>>();
 
     let mut safe_list = SafeList::from(values);
 
@@ -128,7 +110,7 @@ pub fn part_two(input: &str) -> isize {
         let mut list = safe_list.list.clone();
         list.remove(index);
 
-        let mut new_list = SafeList::from_isize(list);
+        let mut new_list = SafeList::from(list);
 
         for value in 1..new_list.list.len() {
           new_list.check_validity(value);
