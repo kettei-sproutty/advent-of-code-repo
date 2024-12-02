@@ -1,77 +1,157 @@
-#[derive(Debug)]
-enum Sequence {
-  Increasing,
-  Decreasing,
+#[derive(Debug, Clone)]
+enum SafeListOrdering {
+  Ascending,
+  Descending,
+}
+
+#[derive(Debug, Clone)]
+struct SafeList {
+  ordering: SafeListOrdering,
+  list: Vec<isize>,
+  is_valid: bool,
+}
+
+impl SafeList {
+  fn from(values: Vec<&str>) -> Self {
+    let list = values.iter().filter_map(|value| value.parse::<isize>().ok()).collect::<Vec<isize>>();
+
+    let is_valid = list[0] != list[1];
+
+    let ordering = if list[0] < list[1] {
+      SafeListOrdering::Ascending
+    } else {
+      SafeListOrdering::Descending
+    };
+
+    SafeList {
+      ordering,
+      list,
+      is_valid,
+    }
+  }
+
+  fn from_isize(list: Vec<isize>) -> Self {
+    let is_valid = list[0] != list[1];
+
+    let ordering = if list[0] < list[1] {
+      SafeListOrdering::Ascending
+    } else {
+      SafeListOrdering::Descending
+    };
+
+    SafeList {
+      ordering,
+      list,
+      is_valid,
+    }
+  }
+
+  fn check_validity(&mut self, index: usize) {
+    let previous = self.list[index - 1];
+    let current = self.list[index];
+
+    let difference = current - previous;
+    if difference.abs() > 3 {
+      self.is_valid = false;
+      return;
+    }
+
+    match self.ordering {
+      SafeListOrdering::Ascending => {
+        if current <= previous {
+          self.is_valid = false;
+        }
+      }
+      SafeListOrdering::Descending => {
+        if current >= previous {
+          self.is_valid = false;
+        }
+      }
+    }
+  }
 }
 
 pub fn part_one(input: &str) -> isize {
   let mut accumulator: isize = 0;
+
   for line in input.lines() {
+    let line = line.trim();
     if line.is_empty() {
       continue;
     }
-    let elements = line
-      .split_whitespace()
-      .into_iter()
-      .filter_map(|x| x.parse::<isize>().ok())
-      .collect::<Vec<isize>>();
 
-    let mut is_safe = true;
-    let mut sequence: Option<Sequence> = None;
+    let values = line.split_whitespace().collect::<Vec<&str>>();
 
-    for (index, element) in elements.iter().enumerate() {
-      if index == 0 {
-        continue;
-      }
+    let mut safe_list = SafeList::from(values);
+    if !safe_list.is_valid {
+      continue;
+    }
 
-      let previous = elements.get(index - 1).unwrap();
-      if sequence.is_none() {
-        if element > previous {
-          sequence = Some(Sequence::Increasing);
-        } else if element < previous {
-          sequence = Some(Sequence::Decreasing);
-        } else {
-          is_safe = false;
-          break;
-        }
-      }
-
-      let difference = element - previous;
-      if difference.abs() > 3 || difference.abs() == 0 {
-        is_safe = false;
+    for value in 1..safe_list.list.len() {
+      safe_list.check_validity(value);
+      if !safe_list.is_valid {
         break;
-      }
-
-      if let Some(Sequence::Increasing) = sequence {
-        if difference < 0 {
-          is_safe = false;
-          break;
-        }
-      }
-
-      if let Some(Sequence::Decreasing) = sequence {
-        if difference > 0 {
-          is_safe = false;
-          break;
-        }
       }
     }
 
-    if is_safe {
+    if safe_list.is_valid {
       accumulator += 1;
     }
   }
-
   accumulator
 }
 
-pub fn part_two(_input: &str) -> isize {
-  0
+pub fn part_two(input: &str) -> isize {
+  let mut accumulator: isize = 0;
+
+  for line in input.lines() {
+    let line = line.trim();
+    if line.is_empty() {
+      continue;
+    }
+
+    let values = line.split_whitespace().collect::<Vec<&str>>();
+
+    let mut safe_list = SafeList::from(values);
+
+    for value in 1..safe_list.list.len() {
+      safe_list.check_validity(value);
+      if !safe_list.is_valid {
+        break;
+      }
+    }
+
+    if safe_list.is_valid {
+      accumulator += 1;
+    } else {
+      let new_list = safe_list.list.clone();
+      for index in 0..new_list.len() {
+        let mut list = safe_list.list.clone();
+        list.remove(index);
+
+        let mut new_list = SafeList::from_isize(list);
+
+        for value in 1..new_list.list.len() {
+          new_list.check_validity(value);
+          if !new_list.is_valid {
+            break;
+          }
+        }
+
+        if new_list.is_valid {
+          accumulator += 1;
+          break;
+        }
+      }
+    }
+  }
+  accumulator
 }
+
 
 #[allow(dead_code)]
 fn main() {
-  let asset = include_str!("../assets/day-02/asset-part-one.txt");
+  let asset = include_str!("../assets/day-02/asset.txt");
   let part_1_result = part_one(asset);
 
   println!("Part 1 result: {}", part_1_result);
@@ -94,6 +174,6 @@ mod tests {
   #[test]
   fn test_part_two_example() {
     let example_assets = include_str!("../assets/day-02/example.txt");
-    assert_eq!(part_two(example_assets), 0);
+    assert_eq!(part_two(example_assets), 4);
   }
 }
