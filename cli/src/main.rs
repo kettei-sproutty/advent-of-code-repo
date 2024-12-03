@@ -42,7 +42,7 @@ fn main() {
     .expect("bin must be an array");
 
   let bin_name = format!("day-{day:02}");
-  let bin_path = format!("src/day-{day:02}.rs");
+  let bin_path = format!("src/day_{day:02}.rs");
 
   bin_section.push(toml::Value::Table(
     vec![
