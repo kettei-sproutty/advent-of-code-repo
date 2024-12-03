@@ -47,7 +47,7 @@ fn day_03_part_one() {
 
 #[divan::bench]
 fn day_03_part_one_no_regex() {
-  day_03::part_one_no_regex(divan::black_box(include_str!("../assets/day-02/asset.txt")));
+  day_03::part_one_no_regex(divan::black_box(include_str!("../assets/day-03/asset.txt")));
 }
 
 #[divan::bench]
