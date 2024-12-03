@@ -1,4 +1,4 @@
-use year_2024::{day_01, day_02};
+use year_2024::*;
 
 fn main() {
   divan::main();
@@ -37,4 +37,9 @@ fn day_02_part_one() {
 #[divan::bench]
 fn day_02_part_two() {
   day_02::part_two(divan::black_box(include_str!("../assets/day-02/asset.txt")));
+}
+
+#[divan::bench]
+fn day_03_part_one() {
+  day_03::part_one(divan::black_box(include_str!("../assets/day-03/asset.txt")));
 }

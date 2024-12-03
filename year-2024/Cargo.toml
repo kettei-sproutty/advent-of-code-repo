@@ -1,7 +1,7 @@
 [[bench]]
+harness = false
 name = "benchmarks"
 path = "benches/benchmarks.rs"
-harness = false
 
 [[bin]]
 name = "day-01"
@@ -11,14 +11,20 @@ path = "src/day_01.rs"
 name = "day-02"
 path = "src/day_02.rs"
 
+[[bin]]
+name = "day-03"
+path = "src/day_03.rs"
+
+[dependencies]
+regex = "1.11.1"
 
 [dependencies.serde]
+workspace = true
+
+[dev-dependencies.divan]
 workspace = true
 
 [package]
 edition = "2021"
 name = "year-2024"
 version = "0.1.0"
-
-[dev-dependencies]
-divan.workspace = true
