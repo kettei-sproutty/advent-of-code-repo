@@ -82,10 +82,10 @@ fn main() {
   let asset = include_str!("../assets/day-02/asset.txt");
 
   let part_1_result = part_one(asset);
-  println!("Part 1 result: {}", part_1_result);
+  println!("Part 1 result: {part_1_result}");
 
   let part_2_result = part_two(asset);
-  println!("Part 2 result: {}", part_2_result);
+  println!("Part 2 result: {part_2_result}");
 }
 
 #[cfg(test)]

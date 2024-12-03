@@ -31,8 +31,8 @@ fn get_columns(input: &str) -> (Vec<isize>, Vec<isize>) {
 pub fn part_one(input: &str) -> isize {
   let (mut left, mut right) = get_columns(input);
 
-  left.sort();
-  right.sort();
+  left.sort_unstable();
+  right.sort_unstable();
 
   let mut accumulator: isize = 0;
 
@@ -46,8 +46,8 @@ pub fn part_one(input: &str) -> isize {
 pub fn part_one_zip(input: &str) -> isize {
   let (mut left, mut right) = get_columns(input);
 
-  left.sort();
-  right.sort();
+  left.sort_unstable();
+  right.sort_unstable();
 
   left.iter().zip(right.iter())
     .map(|(left, right)| (right - left).abs())
@@ -156,19 +156,19 @@ fn main() {
   let asset = include_str!("../assets/day-01/asset.txt");
 
   let part_1_result = part_one(asset);
-  println!("Part 1 result: {}", part_1_result);
+  println!("Part 1 result: {part_1_result}");
 
   let part_1_zip_result = part_one_zip(asset);
-  println!("Part 1 zip result: {}", part_1_zip_result);
+  println!("Part 1 zip result: {part_1_zip_result}");
 
   let part_1_insert_sort_result = part_one_insert_sort(asset);
-  println!("Part 1 dynamic sort result: {}", part_1_insert_sort_result);
+  println!("Part 1 dynamic sort result: {part_1_insert_sort_result}");
 
   let part_2_result = part_two(asset);
-  println!("Part 2 result: {}", part_2_result);
+  println!("Part 2 result: {part_2_result}");
 
   let part_2_directly_parsed_result = part_two_directly_parsed(asset);
-  println!("Part 2 directly parsed result: {}", part_2_directly_parsed_result);
+  println!("Part 2 directly parsed result: {part_2_directly_parsed_result}");
 }
 
 #[cfg(test)]

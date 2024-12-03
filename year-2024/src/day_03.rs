@@ -2,7 +2,7 @@ pub use regex::Regex;
 
 pub fn part_one(input: &str) -> isize {
  Regex::new(r"mul\((\d+,\d+)\)").unwrap().captures_iter(input).fold(0, |acc, cap| {
-    let mut iter = cap[1].split(",");
+    let mut iter = cap[1].split(',');
     let a = iter.next().unwrap().parse::<isize>().unwrap();
     let b = iter.next().unwrap().parse::<isize>().unwrap();
     acc + a * b
@@ -22,7 +22,7 @@ pub fn part_one_no_regex(input: &str) -> isize {
     let mul_position = mul_position.unwrap();
     let start = mul_position + 4;
 
-    let end = input[start..].find(")");
+    let end = input[start..].find(')');
 
     if end.is_none() {
       break;
@@ -31,7 +31,7 @@ pub fn part_one_no_regex(input: &str) -> isize {
     let end = end.unwrap();
     let numbers = &input[start..start + end];
 
-    let mut iter = numbers.split(",");
+    let mut iter = numbers.split(',');
     let a = iter.next().unwrap().parse::<isize>();
     if a.is_err() {
       input = &input[start..];
@@ -68,22 +68,22 @@ pub fn part_two(input: &str) -> isize {
       return acc;
     }
 
-    let mut iter = cap[1].split(",");
+    let mut iter = cap[1].split(',');
     let a = iter.next().unwrap().parse::<isize>().unwrap();
     let b = iter.next().unwrap().parse::<isize>().unwrap();
     acc + a * b
   })
 }
 
+const DO_SIZE: usize = "do()".len();
+const MUL_SIZE: usize = "mul(".len();
+
 pub fn part_two_no_regex(input: &str) -> isize {
   let mut input = input;
   let mut accumulator = 0;
 
-  const DO_SIZE: usize = "do()".len();
-  const MUL_SIZE: usize = "mul(".len();
-
   let parse = |input: &str| -> Option<(isize, isize)> {
-    let mut iter = input.split(",");
+    let mut iter = input.split(',');
     let a = iter.next();
     if a.is_none() {
       return None
@@ -124,7 +124,7 @@ pub fn part_two_no_regex(input: &str) -> isize {
     if dont_position < do_position && dont_position < mul_position {
       if do_position < mul_position {
         let start = mul_position + MUL_SIZE;
-        let end = input[start..].find(")").unwrap();
+        let end = input[start..].find(')').unwrap();
         let numbers = &input[start..start + end];
 
         let numbers = parse(numbers);
@@ -151,7 +151,7 @@ pub fn part_two_no_regex(input: &str) -> isize {
 
     if do_position < dont_position && do_position < mul_position {
       let start = mul_position + MUL_SIZE;
-      let end = input[start..].find(")").unwrap();
+      let end = input[start..].find(')').unwrap();
       let numbers = &input[start..start + end];
 
       let numbers = parse(numbers);
@@ -169,7 +169,7 @@ pub fn part_two_no_regex(input: &str) -> isize {
 
     if mul_position < dont_position && mul_position < do_position {
       let start = mul_position + MUL_SIZE;
-      let end = input[start..].find(")").unwrap();
+      let end = input[start..].find(')').unwrap();
       let numbers = &input[start..start + end];
 
       let numbers = parse(numbers);
@@ -198,8 +198,6 @@ pub fn part_two_o_n(input: &str) -> isize {
   let mut is_dont = false;
   let mut action_checker = String::new();
 
-  const MUL_SIZE: usize = "mul(".len();
-
   for char in input.chars() {
     action_checker.push(char);
     if action_checker.ends_with("don't()") {
@@ -226,7 +224,7 @@ pub fn part_two_o_n(input: &str) -> isize {
       }
       action_checker.pop();
       action_checker = action_checker[MUL_SIZE..].to_string();
-      let mut iter = action_checker.split(",");
+      let mut iter = action_checker.split(',');
       let a = iter.next();
 
       if a.is_none() {
@@ -267,19 +265,19 @@ fn main() {
   let asset = include_str!("../assets/day-03/asset.txt");
 
   let part_1_result = part_one(asset);
-  println!("Part 1 result: {}", part_1_result);
+  println!("Part 1 result: {part_1_result}");
 
   let part_1_no_regex_result = part_one_no_regex(asset);
-  println!("Part 1 no regex result: {}", part_1_no_regex_result);
+  println!("Part 1 no regex result: {part_1_no_regex_result}");
 
   let part_2_result = part_two(asset);
-  println!("Part 2 result: {}", part_2_result);
+  println!("Part 2 result: {part_2_result}");
 
   let part_2_no_regex_result = part_two_no_regex(asset);
-  println!("Part 2 no regex result: {}", part_2_no_regex_result);
+  println!("Part 2 no regex result: {part_2_no_regex_result}");
 
   let part_2_o_n_result = part_two_o_n(asset);
-  println!("Part 2 O(n) result: {}", part_2_o_n_result);
+  println!("Part 2 O(n) result: {part_2_o_n_result}");
 }
 
 #[cfg(test)]

@@ -16,7 +16,7 @@ fn main() {
 
   let day: usize = CustomType::new("Day: ")
     .with_validator(move |&day: &usize| {
-      if day >= 1 && day <= 25 {
+      if (1..=25).contains(&day) {
         Ok(Validation::Valid)
       } else {
         Ok(Validation::Invalid(
@@ -27,8 +27,8 @@ fn main() {
     .prompt()
     .expect("Cannot read day");
 
-  let year_path = format!("year-{}", year);
-  let cargo_toml_path = format!("{}/Cargo.toml", year_path);
+  let year_path = format!("year-{year}");
+  let cargo_toml_path = format!("{year_path}/Cargo.toml");
   let toml = std::fs::read_to_string(&cargo_toml_path).expect("Cannot read Cargo.toml");
 
   let parsed = toml::from_str::<toml::Value>(&toml).expect("Cannot parse Cargo.toml");
@@ -41,8 +41,8 @@ fn main() {
     .as_array_mut()
     .expect("bin must be an array");
 
-  let bin_name = format!("day-{:02}", day);
-  let bin_path = format!("src/day-{:02}.rs", day);
+  let bin_name = format!("day-{day:02}");
+  let bin_path = format!("src/day-{day:02}.rs");
 
   bin_section.push(toml::Value::Table(
     vec![
@@ -56,24 +56,24 @@ fn main() {
   std::fs::write(cargo_toml_path, toml::to_string(&cargo_toml).expect("Cannot serialize Cargo.toml"))
     .expect("Cannot write Cargo.toml");
 
-  let year_day_path = format!("{}/src/day_{:02}.rs", year_path, day);
+  let year_day_path = format!("{year_path}/src/day_{day:02}.rs");
   let template = include_str!("../templates/bin.rs");
 
-  std::fs::write(year_day_path, template.replace("{{day}}", &format!("{:02}", day)))
+  std::fs::write(year_day_path, template.replace("{{day}}", &format!("{day:02}")))
     .expect("Cannot write day file");
 
-  std::fs::create_dir_all(format!("{}/assets/day-{:02}", year_path, day))
+  std::fs::create_dir_all(format!("{year_path}/assets/day-{day:02}"))
     .expect("Cannot create asset directory");
 
   std::fs::write(
-    format!("{}/assets/day-{:02}/asset.txt", year_path, day),
+    format!("{year_path}/assets/day-{day:02}/asset.txt"),
     "".as_bytes(),
   ).expect("Cannot create asset file");
 
   std::fs::write(
-    format!("{}/assets/day-{:02}/example.txt", year_path, day),
+    format!("{year_path}/assets/day-{day:02}/example.txt"),
     "".as_bytes(),
   ).expect("Cannot create asset file");
 
-  println!("Day {} added to year {}", day, year);
+  println!("Day {day} added to year {year}");
 }
