@@ -1,14 +1,15 @@
 benchmarks                          fastest       │ slowest       │ median        │ mean          │ samples │ iters
-├─ day_01_part_one                  65.2 µs       │ 119.2 µs      │ 65.99 µs      │ 68.84 µs      │ 100     │ 100
-├─ day_01_part_one_insert_sort      282.4 µs      │ 412.5 µs      │ 298.2 µs      │ 302.1 µs      │ 100     │ 100
-├─ day_01_part_one_zip              65.37 µs      │ 103.5 µs      │ 69.45 µs      │ 69.97 µs      │ 100     │ 100
-├─ day_01_part_two                  93.49 µs      │ 136.7 µs      │ 97.47 µs      │ 98.9 µs       │ 100     │ 100
-├─ day_01_part_two_directly_parsed  95.24 µs      │ 141.4 µs      │ 101.4 µs      │ 101.8 µs      │ 100     │ 100
-├─ day_02_part_one                  169 µs        │ 262.8 µs      │ 174.8 µs      │ 179 µs        │ 100     │ 100
-├─ day_02_part_two                  201.5 µs      │ 264.6 µs      │ 211.1 µs      │ 214.1 µs      │ 100     │ 100
-├─ day_03_part_one                  204.3 µs      │ 674.5 µs      │ 211.7 µs      │ 222.2 µs      │ 100     │ 100
-├─ day_03_part_one_no_regex         63.74 µs      │ 119.7 µs      │ 63.97 µs      │ 66.14 µs      │ 100     │ 100
-├─ day_03_part_two                  293.3 µs      │ 501.2 µs      │ 307.6 µs      │ 323.2 µs      │ 100     │ 100
-├─ day_03_part_two_no_regex         213 µs        │ 332.8 µs      │ 223.1 µs      │ 229.9 µs      │ 100     │ 100
-╰─ day_03_part_two_o_n              133.9 µs      │ 192.3 µs      │ 141.5 µs      │ 144.2 µs      │ 100     │ 100
+├─ day_01_part_one                  65.08 µs      │ 119.9 µs      │ 66.87 µs      │ 68.09 µs      │ 100     │ 100
+├─ day_01_part_one_insert_sort      285.9 µs      │ 406.2 µs      │ 293.1 µs      │ 299.4 µs      │ 100     │ 100
+├─ day_01_part_one_zip              64.91 µs      │ 102.1 µs      │ 66.02 µs      │ 67.92 µs      │ 100     │ 100
+├─ day_01_part_two                  92.95 µs      │ 143.8 µs      │ 97.22 µs      │ 98.09 µs      │ 100     │ 100
+├─ day_01_part_two_directly_parsed  94.33 µs      │ 131.6 µs      │ 99.41 µs      │ 100.3 µs      │ 100     │ 100
+├─ day_02_part_one                  168.8 µs      │ 216.6 µs      │ 174.6 µs      │ 176.4 µs      │ 100     │ 100
+├─ day_02_part_two                  201.6 µs      │ 316.4 µs      │ 204.5 µs      │ 206.1 µs      │ 100     │ 100
+├─ day_03_part_one                  205.7 µs      │ 832.6 µs      │ 213.7 µs      │ 226.1 µs      │ 100     │ 100
+├─ day_03_part_one_no_regex         62.08 µs      │ 85.58 µs      │ 62.66 µs      │ 64.37 µs      │ 100     │ 100
+├─ day_03_part_one_o_n              56.99 µs      │ 67.49 µs      │ 58.97 µs      │ 59.22 µs      │ 100     │ 100
+├─ day_03_part_two                  293.2 µs      │ 730.7 µs      │ 298.8 µs      │ 314.6 µs      │ 100     │ 100
+├─ day_03_part_two_no_regex         217.1 µs      │ 285.6 µs      │ 226.4 µs      │ 229.6 µs      │ 100     │ 100
+╰─ day_03_part_two_o_n              146.6 µs      │ 202.4 µs      │ 158.5 µs      │ 156.9 µs      │ 100     │ 100
 

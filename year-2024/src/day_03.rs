@@ -54,6 +54,71 @@ pub fn part_one_no_regex(input: &str) -> isize {
   accumulator
 }
 
+pub fn part_one_o_n(input: &str) -> isize {
+  let mut accumulator = 0;
+  let mut action_checker = String::new();
+
+  for char in input.chars() {
+    if action_checker.is_empty() && char != 'm' {
+      continue;
+    }
+
+    if action_checker == "m" && char != 'u' {
+      action_checker.clear();
+      continue;
+    }
+
+    if action_checker == "mu" && char != 'l' {
+      action_checker.clear();
+      continue;
+    }
+
+    if action_checker == "mul" && char != '(' {
+      action_checker.clear();
+      continue;
+    }
+
+    action_checker.push(char);
+
+    if action_checker.starts_with("mul(") && char == ')' {
+      action_checker.pop();
+      action_checker = action_checker[MUL_SIZE..].to_string();
+      let mut iter = action_checker.split(',');
+      let a = iter.next();
+
+      if a.is_none() {
+        action_checker.clear();
+        continue;
+      }
+
+      let b = iter.next();
+      if b.is_none() {
+        action_checker.clear();
+        continue;
+      }
+
+      let a = a.unwrap().parse::<isize>();
+      if a.is_err() {
+        action_checker.clear();
+        continue;
+      }
+
+      let b = b.unwrap().parse::<isize>();
+      if b.is_err() {
+        action_checker.clear();
+        continue;
+      }
+
+      let a = a.unwrap();
+      let b = b.unwrap();
+
+      accumulator += a * b;
+    }
+  }
+
+  accumulator
+}
+
 pub fn part_two(input: &str) -> isize {
   let mut is_dont = false;
   Regex::new(r"mul\((\d+,\d+)\)|do\(\)|don't\(\)").unwrap().captures_iter(input).fold(0, |acc, cap| {
@@ -270,6 +335,9 @@ fn main() {
   let part_1_no_regex_result = part_one_no_regex(asset);
   println!("Part 1 no regex result: {part_1_no_regex_result}");
 
+  let part_1_o_n_result = part_one_o_n(asset);
+  println!("Part 1 O(n) result: {part_1_o_n_result}");
+
   let part_2_result = part_two(asset);
   println!("Part 2 result: {part_2_result}");
 
@@ -294,6 +362,12 @@ mod tests {
   fn test_part_one_no_regex_example() {
     let example_assets = include_str!("../assets/day-03/example.txt");
     assert_eq!(part_one_no_regex(example_assets), 161);
+  }
+
+  #[test]
+  fn test_part_one_o_n_example() {
+    let example_assets = include_str!("../assets/day-03/example.txt");
+    assert_eq!(part_one_o_n(example_assets), 161);
   }
 
   #[test]

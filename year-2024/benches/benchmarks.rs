@@ -51,6 +51,11 @@ fn day_03_part_one_no_regex() {
 }
 
 #[divan::bench]
+fn day_03_part_one_o_n() {
+  day_03::part_one_o_n(divan::black_box(include_str!("../assets/day-03/asset.txt")));
+}
+
+#[divan::bench]
 fn day_03_part_two() {
   day_03::part_two(divan::black_box(include_str!("../assets/day-03/asset.txt")));
 }
